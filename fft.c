@@ -942,15 +942,7 @@ void mufft_execute_plan_2d(mufft_plan_2d *plan, void * MUFFT_RESTRICT output, co
             cfloat *tout = out;
 
             const struct mufft_step_1d *first_step = &plan->steps_x[0];
-            if (plan->c2r_resolve != NULL)
-            {
-                plan->c2r_resolve(tout + y * Nx, input + 2 * y * Nx, plan->r2c_twiddles, Nx);
-                first_step->func(tin + y * Nx, tout + y * Nx, ptx, 1, Nx);
-            }
-            else
-            {
-                first_step->func(tin + y * Nx, input + y * Nx, ptx, 1, Nx);
-            }
+            first_step->func(tin + y * Nx, input + y * Nx, ptx, 1, Nx);
 
             for (unsigned i = 1; i < plan->num_steps_x; i++)
             {
